@@ -17,7 +17,6 @@ export default function Header() {
   const [lang, setLang] = useState("EN");
 
   const cart = useCart((state) => state.cart);
-  const removeFromCart = useCart((state) => state.removeFromCart);
 
   const router = useRouter();
 
@@ -60,13 +59,13 @@ export default function Header() {
               <div className="absolute right-0 mt-2 bg-white border rounded shadow-md w-20">
                 <div
                   onClick={() => changeLang("EN")}
-                  className="px-3 py-2 hover:bg-red-50 cursor-pointer"
+                  className="px-3 py-2 hover:bg-red-50 cursor-pointer font-semibold text-gray-900"
                 >
                   EN
                 </div>
                 <div
                   onClick={() => changeLang("BN")}
-                  className="px-3 py-2 hover:bg-red-50 cursor-pointer"
+                  className="px-3 py-2 hover:bg-red-50 cursor-pointer font-semibold text-gray-900"
                 >
                   BN
                 </div>
@@ -139,8 +138,70 @@ export default function Header() {
           <input
             placeholder="Search products..."
             className="w-full border-2 border-gray-200 px-5 py-3 rounded-full
-            hover:border-red-400 focus:border-red-500 outline-none"
+            hover:border-red-400 focus:border-red-500 outline-none
+            text-gray-900 font-semibold placeholder:text-gray-500"
           />
+        </div>
+      )}
+
+      {/* SIGN IN MODAL */}
+      {openAuth && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white w-80 p-6 rounded-xl shadow-lg">
+
+            <div className="flex justify-between mb-4">
+              <h2 className="font-bold text-xl text-gray-900">
+                Sign In
+              </h2>
+
+              <X
+                onClick={() => setOpenAuth(false)}
+                className="cursor-pointer text-gray-700"
+              />
+            </div>
+
+            <input
+              placeholder="Email"
+              className="w-full border border-gray-300 px-3 py-2 rounded mb-3 
+              text-gray-900 font-semibold placeholder:text-gray-500"
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full border border-gray-300 px-3 py-2 rounded mb-4 
+              text-gray-900 font-semibold placeholder:text-gray-500"
+            />
+
+            <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded font-semibold">
+              Sign In
+            </button>
+
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE MENU */}
+      {openMenu && (
+        <div className="fixed right-0 top-0 w-64 h-full bg-white shadow-xl p-4 z-50 md:hidden">
+
+          <div className="flex justify-between mb-4">
+            <h2 className="text-red-500 font-bold text-xl">
+              eShop
+            </h2>
+
+            <X
+              onClick={() => setOpenMenu(false)}
+              className="cursor-pointer text-gray-700"
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 font-semibold text-gray-900">
+            <Link href="/" className="hover:text-red-500">Home</Link>
+            <Link href="/sellers" className="hover:text-red-500">Sellers</Link>
+            <Link href="/contact" className="hover:text-red-500">Contact</Link>
+            <Link href="/faqs" className="hover:text-red-500">FAQs</Link>
+          </div>
         </div>
       )}
 
@@ -148,27 +209,27 @@ export default function Header() {
       {openCart && (
         <div className="fixed right-0 top-0 w-80 h-full bg-white shadow-xl p-4 z-50">
           <div className="flex justify-between">
-            <h2 className="font-bold">My Cart</h2>
+            <h2 className="font-bold text-gray-900">My Cart</h2>
             <X onClick={() => setOpenCart(false)} />
           </div>
 
           <div className="mt-4 space-y-3">
             {cart.map((item) => (
               <div key={item.id} className="flex justify-between border p-3 rounded">
-                <p>{item.name}</p>
-                <p>₹{item.price}</p>
+                <p className="font-semibold text-gray-900">{item.name}</p>
+                <p className="font-semibold text-gray-900">₹{item.price}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 flex justify-between font-bold">
+          <div className="mt-4 flex justify-between font-bold text-gray-900">
             <span>Total</span>
             <span>₹{total}</span>
           </div>
 
           <button
             onClick={() => router.push("/cart")}
-            className="mt-4 w-full bg-red-500 text-white py-2 rounded"
+            className="mt-4 w-full bg-red-500 text-white py-2 rounded font-semibold"
           >
             View Cart
           </button>
