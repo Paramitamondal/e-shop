@@ -1,58 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const [search, setSearch] = useState("");
+  const slides = [
+    {
+      image: "/banner1.png",
+      title: "Mega Sale",
+      subtitle: "Up To 50% Off",
+    },
+    {
+      image: "/banner2.png",
+      title: "New Arrivals",
+      subtitle: "Latest Collection",
+    },
+    {
+      image: "/banner3.png",
+      title: "Trending Products",
+      subtitle: "Best Deals Today",
+    },
+  ];
+
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="w-full bg-gradient-to-r from-gray-100 to-white px-6 py-10 mt-4">
+    <div className="px-6 py-4">
+      <div className="relative w-full h-[360px] md:h-[420px] rounded-2xl overflow-hidden">
 
-      {/* CONTAINER */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+        {/* IMAGE */}
+        <img
+          src={slides[current].image}
+          className="w-full h-full object-cover"
+        />
 
-        {/* LEFT SIDE */}
-        <div className="flex-1">
-
-          <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-            Best Products <br />
-            For Your Lifestyle
-          </h1>
-
-          <p className="text-gray-600 mt-3">
-            Discover amazing deals on fashion, electronics & more
+        {/* TEXT */}
+        <div className="absolute left-10 top-1/2 -translate-y-1/2 text-white drop-shadow-lg">
+          <p className="text-sm font-semibold tracking-wide">
+            LIMITED TIME OFFER
           </p>
 
-          {/* SEARCH BAR */}
-          <div className="mt-6 flex items-center bg-white border rounded-full overflow-hidden shadow-sm">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 px-4 py-3 outline-none"
-            />
+          <h1 className="text-4xl md:text-5xl font-bold mt-2 leading-tight">
+            {slides[current].title}
+            <br />
+            {slides[current].subtitle}
+          </h1>
 
-            <button className="bg-black text-white px-6 py-3 hover:bg-gray-800">
-              Search
-            </button>
-          </div>
-
-          {/* BUTTON */}
-          <button className="mt-5 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">
+          <button className="mt-5 bg-white text-black px-6 py-2 rounded-lg font-semibold">
             Shop Now
           </button>
-
         </div>
 
-        {/* RIGHT SIDE IMAGE */}
-   <div className="flex-1 flex justify-center">
-  <img
-    src="/hero-product.png"
-    alt="Product Banner"
-    className="w-full max-w-sm md:max-w-md object-contain"
-  />
-</div>
+        {/* DOTS */}
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-3 h-3 rounded-full cursor-pointer ${
+                i === current ? "bg-white" : "bg-white/60"
+              }`}
+            />
+          ))}
+        </div>
 
       </div>
     </div>

@@ -4,31 +4,50 @@ type CartItem = {
   id: number;
   name: string;
   price: number;
-  image?: string;
+  image: string;
+  qty: number;
 };
 
-type CartState = {
+type CartStore = {
   cart: CartItem[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: any) => void;
   removeFromCart: (id: number) => void;
-  clearCart: () => void;
+  updateQty: (id: number, qty: number) => void;
 };
 
-export const useCart = create<CartState>((set) => ({
+export const useCart = create<CartStore>((set) => ({
   cart: [],
 
   addToCart: (item) =>
-    set((state) => ({
-      cart: [...state.cart, item],
-    })),
+    set((state) => {
+      const exists = state.cart.find((i) => i.id === item.id);
+
+      if (exists) {
+        return {
+          cart: state.cart.map((i) =>
+            i.id === item.id
+              ? { ...i, qty: i.qty + 1 }
+              : i
+          ),
+        };
+      }
+
+      return {
+        cart: [...state.cart, { ...item, qty: 1 }],
+      };
+    }),
 
   removeFromCart: (id) =>
     set((state) => ({
-      cart: state.cart.filter((item) => item.id !== id),
+      cart: state.cart.filter((i) => i.id !== id),
     })),
 
-  clearCart: () =>
-    set(() => ({
-      cart: [],
+  updateQty: (id, qty) =>
+    set((state) => ({
+      cart: state.cart.map((i) =>
+        i.id === id
+          ? { ...i, qty: qty <= 1 ? 1 : qty }
+          : i
+      ),
     })),
 }));

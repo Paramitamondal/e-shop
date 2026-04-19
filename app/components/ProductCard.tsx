@@ -1,73 +1,68 @@
 "use client";
 
+import { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import { useCart } from "../store/cart";
-import { useRouter } from "next/navigation";
 
-type Product = {
+type Props = {
   id: number;
   name: string;
   price: number;
-  image?: string;
+  image: string;
 };
 
-type Props = {
-  product?: Product;
-};
+export default function ProductCard({ id, name, price, image }: Props) {
+  const [added, setAdded] = useState(false);
 
-export default function ProductCard({ product }: Props) {
   const addToCart = useCart((state) => state.addToCart);
-  const router = useRouter();
-
-  // ❗ SAFE CHECK (IMPORTANT)
-  if (!product) return null;
 
   const handleAddToCart = () => {
     addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image || "",
+      id,
+      name,
+      price,
+      image,
     });
+
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
-    <div className="border rounded-lg p-3 shadow-sm hover:shadow-md transition bg-white">
+    <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition">
 
-      {/* IMAGE (SAFE) */}
       <img
-        src={product.image || "/placeholder.png"}
-        alt={product.name || "product"}
-        className="w-full h-40 object-cover rounded"
+        src={image}
+        className="w-full h-44 object-cover rounded-lg"
       />
 
-      {/* NAME */}
-      <h2 className="mt-2 font-semibold text-lg">
-        {product.name || "No Name"}
-      </h2>
+      <h3 className="mt-3 text-lg font-semibold text-gray-900">
+        {name}
+      </h3>
 
-      {/* PRICE */}
-      <p className="text-gray-600">
-        ₹{product.price || 0}
+      <p className="text-gray-900 font-bold">
+        ₹{price}
       </p>
 
-      {/* BUTTONS */}
-      <div className="flex gap-2 mt-3">
+      {/* ADD TO CART BUTTON */}
+      <button
+        onClick={handleAddToCart}
+        className="mt-4 w-full border border-pink-300 text-pink-600 py-2 rounded-full 
+        hover:bg-pink-50 transition flex items-center justify-center gap-2 group"
+      >
+        <ShoppingCart 
+          size={16} 
+          className="opacity-0 group-hover:opacity-100 transition"
+        />
 
-        <button
-          onClick={handleAddToCart}
-          className="flex-1 bg-black text-white py-2 rounded hover:bg-gray-800"
-        >
-          Add to Cart
-        </button>
+        Add to Cart
+      </button>
 
-        <button
-          onClick={() => router.push("/cart")}
-          className="flex-1 border py-2 rounded hover:bg-gray-100"
-        >
-          Buy Now
-        </button>
-
-      </div>
+      {added && (
+        <p className="text-yellow-600 text-sm mt-2 font-medium">
+          ✓ Added to cart
+        </p>
+      )}
     </div>
   );
 }

@@ -1,22 +1,21 @@
-import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Hero from "./components/Hero";
 import ProductsSection from "./components/ProductsSection";
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <div className="bg-gray-50 min-h-screen">
 
-     
+      <div className="max-w-7xl mx-auto">
 
-      {/* FIXED ORDER */}
-      <Categories />
-      <Hero />
+        <Categories />
+        <Hero />
 
-      <ProductsSection title="Flash Sale" />
-      <ProductsSection title="Featured Products" />
-      <ProductsSection title="Top Rated" />
-      <ProductsSection title="New Arrivals" />
+        <ProductsSection title="Flash Sale" />
+        <ProductsSection title="Featured Products" />
+        <ProductsSection title="Top Rated" />
+
+      </div>
 
     </div>
   );
