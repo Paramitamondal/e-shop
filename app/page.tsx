@@ -2,14 +2,20 @@
 // Amader aar 'useState' ba 'selectedCategory' dorkar nei
 import Categories from "./components/Categories";
 import Hero from "./components/Hero";
+import BrandsSection from "./components/BrandsSection";
+import PromoBanner from "./components/PromoBanner";
+import SmartProductsSection from "./components/SmartProductsSection";
 import ProductsSection from "./components/ProductsSection";
 
 export default function Home() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        {/* Step 3 onujayi Categories-er bhetore ekhon Link logic ache */}
+
+        {/* CATEGORY */}
         <Categories />
+
+        {/* HERO BANNER */}
         
         <Hero />
 

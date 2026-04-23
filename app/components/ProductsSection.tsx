@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import ProductCard from "./ProductCard";
 
 interface Product {
@@ -175,22 +176,37 @@ export default function ProductsSection({ title, selectedCategory = "", limit, o
   }
 
   return (
-    <section className="px-6 py-10 mt-6 bg-white rounded-xl shadow-sm border border-gray-100">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">
-          {selectedCategory === "" ? title : `${selectedCategory} Collection`}
+    <section className="bg-white px-6 py-8 mt-6 rounded-xl">
+
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-6">
+
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+          {title}
         </h2>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {displayList.map((product) => (
-            <ProductCard 
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.image} category={""}            />
-          ))}
-        </div>
+
+        <Link
+          href="/products"
+          className="text-red-500 font-medium hover:underline"
+        >
+          See All →
+        </Link>
+
+      </div>
+
+      {/* PRODUCTS GRID */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            image={product.image}
+          />
+        ))}
+
       </div>
     </section>
   );
