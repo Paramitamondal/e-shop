@@ -45,42 +45,18 @@ export default function Header() {
     setOpenLang(false);
   };
 
-  const handleAuth = async () => {
-    try {
-      const endpoint =
-        authType === "login" ? "/api/auth/login" : "/api/auth/register";
+  // 🔥 BACKEND REMOVED - FRONTEND ONLY
+  const handleAuth = () => {
+    alert(
+      authType === "login"
+        ? "Login UI only (backend removed)"
+        : "Signup UI only (backend removed)"
+    );
 
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(
-          authType === "login"
-            ? "Login Success"
-            : "Account Created Successfully"
-        );
-
-        setOpenAuth(false);
-        setName("");
-        setEmail("");
-        setPassword("");
-      } else {
-        alert(data.message || "Something went wrong");
-      }
-    } catch (err) {
-      alert("Server error");
-    }
+    setOpenAuth(false);
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -171,29 +147,45 @@ export default function Header() {
       </div>
 
       {/* MOBILE MENU */}
-      {openMenu && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/40"
-            onClick={() => setOpenMenu(false)}
-          />
+ {/* MOBILE MENU */}
+{openMenu && (
+  <div className="fixed inset-0 z-50 md:hidden">
+    
+    {/* overlay */}
+    <div
+      className="absolute inset-0 bg-black/70"
+      onClick={() => setOpenMenu(false)}
+    />
 
-          <div className="absolute left-0 top-0 h-full w-64 bg-white shadow-xl p-5">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-800">Menu</h2>
-              <X onClick={() => setOpenMenu(false)} />
-            </div>
-
-            <div className="flex flex-col gap-5 text-gray-700 font-medium">
-              <Link href="/">Home</Link>
-              <Link href="/sellers">Sellers</Link>
-              <Link href="/contact">Contact</Link>
-              <Link href="/faqs">FAQs</Link>
-              <Link href="/blogs">Blogs</Link>
-            </div>
+    {/* sidebar */}
+    <div className="absolute left-0 top-0 h-full w-64 bg-black shadow-xl p-5 text-white">
+      
+      {/* LOGO instead of "Menu" */}
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-2">
+          <div className="bg-red-500 text-white px-2 py-1 font-bold rounded">
+            M
           </div>
+          <h1 className="text-xl font-semibold text-white">eShop</h1>
         </div>
-      )}
+
+        <X
+          onClick={() => setOpenMenu(false)}
+          className="cursor-pointer text-white"
+        />
+      </div>
+
+      {/* LINKS */}
+      <div className="flex flex-col gap-5 font-medium text-gray-200">
+        <Link href="/" className="hover:text-red-400">Home</Link>
+        <Link href="/sellers" className="hover:text-red-400">Sellers</Link>
+        <Link href="/contact" className="hover:text-red-400">Contact</Link>
+        <Link href="/faqs" className="hover:text-red-400">FAQs</Link>
+        <Link href="/blogs" className="hover:text-red-400">Blogs</Link>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* AUTH MODAL */}
       {openAuth && (
