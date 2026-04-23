@@ -9,9 +9,10 @@ type Props = {
   name: string;
   price: number;
   image: string;
+  category: string;
 };
 
-export default function ProductCard({ id, name, price, image }: Props) {
+export default function ProductCard({ id, name, price, image,category }: Props) {
   const [added, setAdded] = useState(false);
 
   const addToCart = useCart((state) => state.addToCart);
@@ -22,6 +23,7 @@ export default function ProductCard({ id, name, price, image }: Props) {
       name,
       price,
       image,
+      category,
     });
 
     setAdded(true);

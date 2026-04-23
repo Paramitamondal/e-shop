@@ -1,24 +1,16 @@
 "use client";
-import ProductCard from "./ProductCard";
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
+import ProductCard from "@/app/components/ProductCard";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
 
-interface Props {
-  title: string;
-  selectedCategory?: string;
-  limit?: number;
-  offset?: number;
-}
+export default function CategoryPage() {
+  const params = useParams();
+  const categoryName = params.category as string;
 
-// --- APNAR PRODUCTS ARRAY TA EKHANE THAKBE ---
-const products: Product[] = [
-  // --- FASHION (7 Products) ---
+  // --- Apnar Product List (Ekhane 100+ product thakte hobe) ---
+  const products = [
+    // --- FASHION (7 Products) ---
  { id: 1, name: "Classic T-Shirt", price: 599, image: "/product/Classic T-Shirt.webp", category: "Fashion" },
   { id: 2, name: "Running Shoes", price: 1299, image: "/product/Running Shoes.webp", category: "Fashion" },
   { id: 3, name: "Denim Jacket", price: 2499, image: "/product/Denim Jacket.webp", category: "Fashion" },
@@ -64,7 +56,7 @@ const products: Product[] = [
 
   // --- DIGITAL PRODUCT (7 Products) ---
   { id: 36, name: "Adobe Subscription", price: 1500, image: "/product/Adobe Subscription.jpg", category: "Digital Product" },
-  { id: 37, name: "E-Book: React Guide", price: 500, image: "/product/E-Book: React Guide.jpg", category: "Digital Product" },
+  { id: 37, name: "E-Book React Guide", price: 500, image: "/product/E-Book React Guide.jpg", category: "Digital Product" },
   { id: 38, name: "Stock Photo Pack", price: 2000, image: "/product/Stock Photo Pack.jpg", category: "Digital Product" },
   { id: 39, name: "Online Course Voucher", price: 3000, image: "/product/Online Course Voucher.jpg", category: "Digital Product" },
   { id: 40, name: "Premium Font Kit", price: 1200, image: "/product/Premium Font Kit.jpg", category: "Digital Product" },
@@ -151,47 +143,52 @@ const products: Product[] = [
   { id: 104, name: "History of World", price: 800, image: "/product/History of World.jpg", category: "Books" },
   { id: 105, name: "Graphic Novel", price: 550, image: "/product/Graphic Novel.jpg", category: "Books" },
 
-];
+  ];
 
-export default function ProductsSection({ title, selectedCategory = "", limit, offset = 0 }: Props) {
-  
-  let displayList: Product[] = [];
-
-  if (selectedCategory === "") {
-    // 1. HOME VIEW: Protiti category theke 1-ta kore product niye variety banano
-    const uniqueCategories = Array.from(new Set(products.map((p) => p.category)));
-    const varietyProducts = uniqueCategories.map((cat) => 
-      products.find((p) => p.category === cat)
-    ).filter((p): p is Product => !!p);
-
-    // 2. APPLY LIMIT & OFFSET: Duplicate bondho korar asol logic
-    displayList = varietyProducts.slice(offset, offset + (limit || 4));
-
-  } else {
-    // 3. CATEGORY VIEW: Shudhu oi category-r product (Extra section gayeb hobe)
-    displayList = products.filter(
-      (item) => item.category.toLowerCase() === selectedCategory.toLowerCase()
-    );
-  }
+  const filteredProducts = useMemo(() => {
+    return products.filter((p) => {
+      // URL-er dash (-) soriye space kora ebong match kora
+      const formattedURL = categoryName?.replace(/-/g, ' ').toLowerCase();
+      return p.category.toLowerCase() === formattedURL;
+    });
+  }, [categoryName]);
 
   return (
-    <section className="px-6 py-10 mt-6 bg-white rounded-xl shadow-sm border border-gray-100">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">
-          {selectedCategory === "" ? title : `${selectedCategory} Collection`}
-        </h2>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {displayList.map((product) => (
-            <ProductCard 
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              image={product.image} category={""}            />
-          ))}
+    <div className="bg-white min-h-screen">
+      {/* Header thakle ekhane thakbe, but boro Category Bar thakbe na */}
+      
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* Breadcrumb - Flipkart style */}
+        <nav className="text-xs text-gray-500 mb-4">
+          Home  &gt;  Products  &gt;  <span className="capitalize">{categoryName?.replace(/-/g, ' ')}</span>
+        </nav>
+
+        {/* Heading Section */}
+        <div className="flex items-baseline gap-3 mb-8 border-b pb-4">
+          <h1 className="text-2xl font-bold text-gray-900 capitalize">
+            {categoryName?.replace(/-/g, ' ')}
+          </h1>
+          <p className="text-gray-500 text-sm">
+            ({filteredProducts.length} items found)
+          </p>
         </div>
+        
+        {/* Product Grid */}
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard 
+                key={product.id} 
+                {...product}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-40">
+            <p className="text-gray-400 text-lg font-medium">Sorry, no products found!</p>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 }
