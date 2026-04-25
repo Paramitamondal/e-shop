@@ -1,70 +1,55 @@
 "use client";
 
-import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "../store/cart";
 
-type Props = {
+type Product = {
   id: number;
   name: string;
   price: number;
   image: string;
-  category: string;
 };
 
-export default function ProductCard({ id, name, price, image,category }: Props) {
-  const [added, setAdded] = useState(false);
-
+export default function ProductCard(product: Product) {
   const addToCart = useCart((state) => state.addToCart);
 
-  const handleAddToCart = () => {
-    addToCart({
-      id,
-      name,
-      price,
-      image,
-      category,
-    });
-
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
-
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-lg transition">
+    <div className="bg-white border rounded-xl overflow-hidden hover:shadow-md transition">
 
-      <img
-        src={image}
-        className="w-full h-44 object-cover rounded-lg"
-      />
-
-      <h3 className="mt-3 text-lg font-semibold text-gray-900">
-        {name}
-      </h3>
-
-      <p className="text-gray-900 font-bold">
-        ₹{price}
-      </p>
-
-      {/* ADD TO CART BUTTON */}
-      <button
-        onClick={handleAddToCart}
-        className="mt-4 w-full border border-pink-300 text-pink-600 py-2 rounded-full 
-        hover:bg-pink-50 transition flex items-center justify-center gap-2 group"
-      >
-        <ShoppingCart 
-          size={16} 
-          className="opacity-0 group-hover:opacity-100 transition"
+      {/* IMAGE FULL WIDTH */}
+      <div className="w-full h-44 bg-gray-50">
+        <img
+          src={product.image}
+          className="w-full h-full object-cover"
         />
+      </div>
 
-        Add to Cart
-      </button>
+      {/* CONTENT */}
+      <div className="p-3">
 
-      {added && (
-        <p className="text-yellow-600 text-sm mt-2 font-medium">
-          ✓ Added to cart
+        {/* TITLE */}
+        <h3 className="text-sm font-medium mt-2 text-gray-900">
+          {product.name}
+        </h3>
+
+        {/* PRICE (BLACK) */}
+        <p className="text-gray-900 font-bold text-sm mb-3">
+          ₹{product.price}
         </p>
-      )}
+
+        {/* ADD TO CART BUTTON */}
+        <button
+          onClick={() => addToCart(product)}
+          className="w-full border border-red-500 text-red-500 py-2 
+          rounded-full hover:bg-red-500 hover:text-white 
+          transition text-sm font-semibold 
+          flex items-center justify-center gap-2"
+        >
+          <ShoppingCart size={16} />
+          Add to Cart
+        </button>
+
+      </div>
     </div>
   );
 }

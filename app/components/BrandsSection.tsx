@@ -10,7 +10,7 @@ export default function BrandsSection() {
     { name: "Puma", logo: "/puma.png" },
     { name: "Apple", logo: "/apple.png" },
     { name: "Samsung", logo: "/samsung-brands.png" },
-    { name: "Sony", logo: "/sony.png" },
+    { name: "Sony", logo: "/soni.png" },
     { name: "Xiaomi", logo: "/xiaomi.png" },
     { name: "OnePlus", logo: "/oneplus.png" },
   ];

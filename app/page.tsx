@@ -1,5 +1,5 @@
 "use client";
-// Amader aar 'useState' ba 'selectedCategory' dorkar nei
+
 import Categories from "./components/Categories";
 import Hero from "./components/Hero";
 import BrandsSection from "./components/BrandsSection";
@@ -12,20 +12,40 @@ export default function Home() {
     <div className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
 
-        {/* CATEGORY */}
         <Categories />
-
-        {/* HERO BANNER */}
-        
         <Hero />
 
-        {/* Home Page ekhon shudhu generic sections dekhabe */}
-        <div id="product-list" className="space-y-10">
-          {/* Alada offset dewa ache jate duplicate product na ashe */}
-          <ProductsSection title="Flash Sale" limit={4} offset={0} />
-          <ProductsSection title="Featured Products" limit={4} offset={4} />
-          <ProductsSection title="Top Rated" limit={4} offset={8} />
+        <div className="mt-8">
+          <BrandsSection />
         </div>
+
+        {/* PROMO 1 */}
+        <PromoBanner
+          image="/promobanner.png"
+          title="BIG PROMO"
+          subtitle="Summer Sale – Up to 70% Off Fashion Collection"
+          link="/categories/fashion"
+        />
+
+        {/* SMART PRODUCTS */}
+        <div className="mt-10">
+          <SmartProductsSection title="Smart Products" />
+        </div>
+
+        {/* PROMO 2 */}
+        <PromoBanner
+          image="/promobanner1.png"
+          title="ELECTRONICS SALE"
+          subtitle="Up to 50% Off On Smart Gadgets"
+          link="/products/electronics"
+        />
+
+        <div className="space-y-10 mt-12">
+          <ProductsSection title="Flash Sale" />
+          <ProductsSection title="Kids Section" />   {/* ✅ changed */}
+          <ProductsSection title="Top Rated" />
+        </div>
+
       </div>
     </div>
   );

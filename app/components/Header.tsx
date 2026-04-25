@@ -1,9 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Menu, Search, X, ChevronDown } from "lucide-react";
+import {
+  ShoppingCart,
+  Menu,
+  Search,
+  X,
+  ChevronDown,
+  GitCompare,
+} from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../store/cart";
 
@@ -14,6 +21,8 @@ export default function Header() {
   const [openAuth, setOpenAuth] = useState(false);
   const [openLang, setOpenLang] = useState(false);
 
+  const searchRef = useRef<HTMLDivElement>(null);
+
   const [lang, setLang] = useState("EN");
 
   const cart = useCart((state) => state.cart);
@@ -23,6 +32,18 @@ export default function Header() {
   useEffect(() => {
     const saved = localStorage.getItem("lang");
     if (saved) setLang(saved);
+  }, []);
+
+  // close search when click outside
+  useEffect(() => {
+    function handleClick(e: any) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setOpenSearch(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
   const changeLang = (l: string) => {
@@ -73,9 +94,10 @@ export default function Header() {
             )}
           </div>
 
+          {/* SIGN IN */}
           <span
             onClick={() => setOpenAuth(true)}
-            className="text-red-400 hover:text-red-500 transition cursor-pointer font-medium"
+            className="text-red-400 hover:text-red-500 cursor-pointer font-medium hover:underline"
           >
             Sign In / Sign Up
           </span>
@@ -108,11 +130,16 @@ export default function Header() {
         {/* Right Icons */}
         <div className="flex items-center gap-5 text-gray-900">
 
+          {/* SEARCH */}
           <Search
             className="cursor-pointer hover:text-red-500"
-            onClick={() => setOpenSearch(!openSearch)}
+            onClick={() => setOpenSearch(true)}
           />
 
+          {/* COMPARE */}
+          <GitCompare className="cursor-pointer hover:text-red-500" />
+
+          {/* CART */}
           <div className="relative">
             <ShoppingCart
               className="cursor-pointer hover:text-red-500"
@@ -133,10 +160,11 @@ export default function Header() {
         </div>
       </div>
 
-      {/* SEARCH */}
+      {/* FULL WIDTH SEARCH */}
       {openSearch && (
-        <div className="px-4 pb-3">
+        <div ref={searchRef} className="px-4 pb-4">
           <input
+            autoFocus
             placeholder="Search products..."
             className="w-full border-2 border-gray-200 px-5 py-3 rounded-full
             hover:border-red-400 focus:border-red-500 outline-none
@@ -198,11 +226,11 @@ export default function Header() {
           </div>
 
           <div className="flex flex-col gap-4 font-semibold text-gray-900">
-            <Link href="/" className="hover:text-red-500">Home</Link>
-            <Link href="/sellers" className="hover:text-red-500">Sellers</Link>
-            <Link href="/contact" className="hover:text-red-500">Contact</Link>
-            <Link href="/faqs" className="hover:text-red-500">FAQs</Link>
-            <Link href="/blogs" className="hover:text-red-500">Blogs</Link>
+            <Link href="/">Home</Link>
+            <Link href="/sellers">Sellers</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/faqs">FAQs</Link>
+            <Link href="/blogs">Blogs</Link>
           </div>
         </div>
       )}
@@ -210,34 +238,69 @@ export default function Header() {
       {/* CART DRAWER */}
       {openCart && (
         <div className="fixed right-0 top-0 w-80 h-full bg-white shadow-xl p-4 z-50">
+
           <div className="flex justify-between">
-            <h2 className="font-bold text-gray-900">My Cart</h2>
+            <h2 className="font-bold text-gray-900">Shopping Cart</h2>
             <X onClick={() => setOpenCart(false)} />
           </div>
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 space-y-4 overflow-y-auto h-[60vh]">
+
+            {cart.length === 0 && (
+              <p className="text-gray-500 text-sm">
+                Your cart is empty
+              </p>
+            )}
+
             {cart.map((item) => (
-              <div key={item.id} className="flex justify-between border p-3 rounded">
-                <p className="font-semibold text-gray-900">{item.name}</p>
-                <p className="font-semibold text-gray-900">₹{item.price}</p>
+              <div key={item.id} className="flex gap-3 border-b pb-3">
+
+                <img
+                  src={item.image}
+                  className="w-14 h-14 object-contain border rounded"
+                />
+
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-900">
+                    {item.name}
+                  </p>
+
+                  <p className="text-red-500 font-bold text-sm">
+                    ₹{item.price}
+                  </p>
+                </div>
+
               </div>
             ))}
+
           </div>
 
-          <div className="mt-4 flex justify-between font-bold text-gray-900">
-            <span>Total</span>
-            <span>₹{total}</span>
+          <div className="mt-4 border-t pt-4">
+
+            <div className="flex justify-between font-bold text-gray-900 mb-3">
+              <span>Total</span>
+              <span>₹{total}</span>
+            </div>
+
+            <button
+              onClick={() => router.push("/cart")}
+              className="w-full bg-red-500 text-white py-2 rounded font-semibold mb-2"
+            >
+              View Cart
+            </button>
+
+            <button
+              onClick={() => setOpenCart(false)}
+              className="w-full border py-2 rounded font-semibold"
+            >
+              Return To Shop
+            </button>
+
           </div>
 
-          <button
-            onClick={() => router.push("/cart")}
-            className="mt-4 w-full bg-red-500 text-white py-2 rounded font-semibold"
-          >
-            View Cart
-          </button>
         </div>
       )}
 
     </header>
   );
-} 
+}
