@@ -4,7 +4,7 @@ export const brands = [
   { name: "Puma", logo: "/puma.png" },
   { name: "Apple", logo: "/apple.png" },
   { name: "Samsung", logo: "/samsung-brands.png" },
-  { name: "Sony", logo: "/sony.png" },
+  { name: "Soni", logo: "/soni.png" },
   { name: "Xiaomi", logo: "/xiaomi.png" },
   { name: "OnePlus", logo: "/oneplus.png" },
   { name: "Oppo", logo: "/oppo.png" },

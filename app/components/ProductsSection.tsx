@@ -81,13 +81,13 @@ const productData: Record<string, any[]> = {
       id: 11,
       name: "Sony Headphones",
       price: 8999,
-      image: "/headphone.png",
+      image: "/soni-headphone.png",
     },
     {
       id: 12,
       name: "Gaming Keyboard RGB",
       price: 3499,
-      image: "/keyboard.png",
+      image: "/gaming-keyboard.png",
     },
   ],
 };

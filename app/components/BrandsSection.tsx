@@ -29,21 +29,22 @@ export default function BrandsSection() {
         {topBrands.map((b, i) => (
           <div
             key={i}
-            className="group bg-white border border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center
+            className="group bg-white border border-gray-100 rounded-xl overflow-hidden
             hover:shadow-md hover:-translate-y-1 transition-all duration-200"
           >
 
-            <div className="w-16 h-16 flex items-center justify-center">
+            {/* LOGO FULL WIDTH */}
+            <div className="w-full h-20 relative">
               <Image
                 src={b.logo}
                 alt={b.name}
-                width={70}
-                height={70}
-                className="object-contain w-full h-full"
+                fill
+                className="object-cover"
               />
             </div>
 
-            <p className="mt-2 text-sm font-medium text-gray-700">
+            {/* BRAND NAME BOTTOM */}
+            <p className="text-sm font-medium text-gray-700 text-center py-2">
               {b.name}
             </p>
 
