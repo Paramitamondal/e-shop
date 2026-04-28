@@ -33,17 +33,19 @@ export default function BrandsSection() {
             hover:shadow-md hover:-translate-y-1 transition-all duration-200"
           >
 
-            {/* LOGO FULL WIDTH */}
-            <div className="w-full h-20 relative">
+            {/* 🔥 FULL WIDTH FIX */}
+            <div className="w-full h-20 relative overflow-hidden">
+
               <Image
                 src={b.logo}
                 alt={b.name}
                 fill
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
+
             </div>
 
-            {/* BRAND NAME BOTTOM */}
+            {/* NAME */}
             <p className="text-sm font-medium text-gray-700 text-center py-2">
               {b.name}
             </p>

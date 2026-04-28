@@ -4,30 +4,30 @@ import Image from "next/image";
 import { useState } from "react";
 
 const brandNames = [
-"Nike","Adidas","Puma","Reebok","Under Armour","New Balance","Fila","Asics",
-"Apple","Samsung","Sony","LG","Panasonic","Philips","Xiaomi","OnePlus",
-"Oppo","Vivo","Realme","Huawei","Honor","Motorola","Nokia","Google",
-"HP","Dell","Lenovo","Asus","Acer","MSI","Microsoft","Intel",
-"AMD","Nvidia","Canon","Nikon","GoPro","Fujifilm","Kodak","BenQ",
-"Boat","JBL","Noise","Skullcandy","Beats","Sennheiser","Bose","Marshall",
-"Casio","Fossil","Titan","Rolex","Timex","Seiko","Citizen","Daniel Wellington",
-"Zara","H&M","Uniqlo","Levis","Gap","Forever21","Mango","Gucci",
-"Prada","Louis Vuitton","Chanel","Dior","Versace","Burberry","Armani","Balenciaga",
-"Nike Kids","Adidas Kids","Puma Kids","Mothercare","Carter's","OshKosh","Chicco","Babyhug",
-"Tata","Reliance","Godrej","Voltas","Blue Star","Haier","Whirlpool","Bosch",
-"Amazon","Flipkart","eBay","Alibaba","Meesho","Myntra","Ajio","Snapdeal",
-"Paytm","PhonePe","Google Pay","Amazon Pay","PayPal","Stripe","Razorpay","Square",
-"Netflix","Spotify","YouTube","Disney","Hotstar","Sony Liv","Zee5","Prime Video",
-"Uber","Ola","Airbnb","Booking","Expedia","MakeMyTrip","Goibibo","Agoda",
-"Twitter","Facebook","Instagram","LinkedIn","Snapchat","Pinterest","Reddit","Tumblr",
-"Toyota","Honda","Hyundai","Kia","BMW","Audi","Mercedes","Tesla",
-"Hero","Bajaj","TVS","Royal Enfield","Yamaha","Suzuki","Kawasaki","Ducati",
-"Colgate","Pepsi","CocaCola","Nestle","Amul","Britannia","Cadbury","Parle"
+  "Nike","Adidas","Puma","Reebok","Under Armour","New Balance","Fila","Asics",
+  "Apple","Samsung","Sony","LG","Panasonic","Philips","Xiaomi","OnePlus",
+  "Oppo","Vivo","Realme","Huawei","Honor","Motorola","Nokia","Google",
+  "HP","Dell","Lenovo","Asus","Acer","MSI","Microsoft","Intel",
+  "AMD","Nvidia","Canon","Nikon","GoPro","Fujifilm","Kodak","BenQ",
+  "Boat","JBL","Noise","Skullcandy","Beats","Sennheiser","Bose","Marshall",
+  "Casio","Fossil","Titan","Rolex","Timex","Seiko","Citizen","Daniel Wellington",
+  "Zara","H&M","Uniqlo","Levis","Gap","Forever21","Mango","Gucci",
+  "Prada","Louis Vuitton","Chanel","Dior","Versace","Burberry","Armani","Balenciaga",
+  "Nike Kids","Adidas Kids","Puma Kids","Mothercare","Carter's","OshKosh","Chicco","Babyhug",
+  "Tata","Reliance","Godrej","Voltas","Blue Star","Haier","Whirlpool","Bosch",
+  "Amazon","Flipkart","eBay","Alibaba","Meesho","Myntra","Ajio","Snapdeal",
+  "Paytm","PhonePe","Google Pay","Amazon Pay","PayPal","Stripe","Razorpay","Square",
+  "Netflix","Spotify","YouTube","Disney","Hotstar","Sony Liv","Zee5","Prime Video",
+  "Uber","Ola","Airbnb","Booking","Expedia","MakeMyTrip","Goibibo","Agoda",
+  "Twitter","Facebook","Instagram","LinkedIn","Snapchat","Pinterest","Reddit","Tumblr",
+  "Toyota","Honda","Hyundai","Kia","BMW","Audi","Mercedes","Tesla",
+  "Hero","Bajaj","TVS","Royal Enfield","Yamaha","Suzuki","Kawasaki","Ducati",
+  "Colgate","Pepsi","CocaCola","Nestle","Amul","Britannia","Cadbury","Parle"
 ];
 
 const allBrands = brandNames.map((name) => ({
   name,
-  logo: "/adidas.png",
+  logo: `/brands/${name.toLowerCase().replace(/ /g, "-")}.png`,
 }));
 
 export default function BrandsPage() {
@@ -47,21 +47,23 @@ export default function BrandsPage() {
           Brands
         </h1>
 
+        {/* GRID */}
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
 
           {brands.map((b, i) => (
             <div key={i} className="text-center">
 
-              <div className="bg-white border rounded-md overflow-hidden aspect-square hover:shadow-sm transition">
-                <div className="w-full h-full flex items-center justify-center">
-                  <Image
-                    src={b.logo}
-                    alt={b.name}
-                    width={300}
-                    height={300}
-                    className="w-full h-auto object-contain"
-                  />
-                </div>
+              {/* 🔥 FULL WIDTH IMAGE FIX (NO DESIGN CHANGE) */}
+              <div className="bg-white border rounded-md overflow-hidden aspect-square hover:shadow-sm transition flex items-center justify-center">
+
+                <Image
+                  src={b.logo}
+                  alt={b.name}
+                  width={500}
+                  height={500}
+                  className="w-full h-full object-cover"
+                />
+
               </div>
 
               <p className="mt-1 text-sm font-semibold text-gray-900">
@@ -73,6 +75,7 @@ export default function BrandsPage() {
 
         </div>
 
+        {/* PAGINATION */}
         <div className="flex justify-center mt-8">
           <div className="flex border rounded-lg overflow-hidden flex-wrap">
 
