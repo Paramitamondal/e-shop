@@ -125,71 +125,63 @@ return(
 <h2 className="text-xl font-extrabold text-gray-900 mb-6">
 Filters
 </h2>
-<div className="mb-8">
-<p className="font-bold mb-3 text-gray-900">Price</p>
-<div className="space-y-2 text-sm font-bold">
-<label className="block"><input type="checkbox"/> Under ₹1000</label>
-<label className="block"><input type="checkbox"/> ₹1000 - ₹5000</label>
-<label className="block"><input type="checkbox"/> Above ₹5000</label>
-</div>
-</div>
-
-<div className="mb-8">
-<p className="font-bold mb-3 text-gray-900">Choose Brand</p>
-<div className="space-y-2 text-sm font-bold">
-<label className="block"><input type="checkbox"/> Apple</label>
-<label className="block"><input type="checkbox"/> Samsung</label>
-<label className="block"><input type="checkbox"/> Nike</label>
-<label className="block"><input type="checkbox"/> Adidas</label>
-<label className="block"><input type="checkbox"/> Ikea</label>
-<label className="block"><input type="checkbox"/> Zara</label>
-</div>
-</div>
 
 </div>
 
 <div className="flex-1 p-8">
 
-<h1 className="text-2xl font-extrabold text-gray-900 mb-6 capitalize">
-{formattedCategory}
-</h1>
-{subCategories[formattedCategory] && (
-<div className="flex gap-8 mb-8">
+{/* TOP BAR */}
+<div className="flex justify-between items-center mb-6">
 
+<h1 className="text-2xl font-extrabold text-gray-900">
+Products
+</h1>
+
+<div className="flex gap-6 text-sm font-extrabold text-gray-700">
+<span className="cursor-pointer hover:text-black">Relevance</span>
+<span className="cursor-pointer hover:text-black">Popular</span>
+<span className="cursor-pointer hover:text-black">Latest</span>
+</div>
+
+</div>
+
+<h2 className="text-xl font-extrabold text-gray-900 mb-6 capitalize">
+{formattedCategory} Category
+</h2>
+
+{!selectedSub && subCategories[formattedCategory] && (
+<div className="flex gap-8 mb-8">
 {subCategories[formattedCategory].map((item:string)=>(
 <div
 key={item}
 onClick={()=>setSelectedSub(item)}
 className="text-center cursor-pointer"
 >
-
 <div className="w-16 h-16 rounded-full bg-gray-100 mx-auto mb-2 overflow-hidden">
 <img
 src={`/products/${formattedCategory}/${item.toLowerCase()}.png`}
+onError={(e:any)=>e.target.style.display="none"}
 className="w-full h-full object-cover"
 />
 </div>
 
-<p className="text-sm font-bold text-gray-900">
+<p className="text-sm font-extrabold text-gray-900">
 {item}
 </p>
 
 </div>
 ))}
-
 </div>
 )}
 
-<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+
 {filtered.map((p)=>(
-<ProductCard
-key={p.id}
-id={p.id}
-name={p.name}
-price={p.price}
-image={p.image}
-/>
+<div key={p.id}>
+<ProductCard {...p} variant="category" />
+</div>
 ))}
+
 </div>
 
 </div>

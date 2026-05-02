@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link"; // useState dorkar nei jodi toggle bad den
+import Link from "next/link";
 
 export default function Categories() {
   const categories = [
@@ -18,34 +18,42 @@ export default function Categories() {
     { name: "Sports", image: "/sports.png" },
     { name: "Toys", image: "/toys.png" },
     { name: "Books", image: "/books.png" },
-    
   ];
 
-  // Home page-e amra shudhu prothom 7-ta dekhabo
   const visible = categories.slice(0, 7);
 
   return (
     <div className="px-4 md:px-8 py-6 bg-white">
       <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-5">
 
-        {/* SEE ALL BUTTON - Ekhon eta naya page-e niye jabe */}
-        <Link href="/categories"> 
-          <div className="cursor-pointer text-center flex flex-col items-center justify-center group h-full">
-            <div className="grid grid-cols-2 gap-1 group-hover:scale-110 transition-transform">
-              <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <div className="w-4 h-4 bg-blue-400 rounded"></div>
-              <div className="w-4 h-4 bg-blue-300 rounded"></div>
-              <div className="w-4 h-4 bg-blue-600 rounded"></div>
+        {/* ✅ SEE ALL (SAME HEIGHT, BIGGER LOOK) */}
+        <Link href="/categories">
+          <div className="cursor-pointer text-center group">
+
+            {/* SAME HEIGHT AS CATEGORY */}
+            <div className="h-28 md:h-32 flex items-center justify-center">
+              
+              {/* BIGGER ICON */}
+              <div className="grid grid-cols-2 gap-1 scale-125 group-hover:scale-150 transition-transform">
+                <div className="w-5 h-5 bg-blue-500 rounded"></div>
+                <div className="w-5 h-5 bg-blue-400 rounded"></div>
+                <div className="w-5 h-5 bg-blue-300 rounded"></div>
+                <div className="w-5 h-5 bg-blue-600 rounded"></div>
+              </div>
+
             </div>
-            <p className="mt-2 text-sm font-semibold text-gray-900">See All</p>
+
+            <p className="mt-2 text-sm font-semibold text-gray-900">
+              See All
+            </p>
           </div>
         </Link>
 
         {/* CATEGORIES LIST */}
         {visible.map((cat) => (
-          <Link 
-            key={cat.name} 
-            href={`/products/${cat.name.toLowerCase().replace(/\s+/g, '-')}`} 
+          <Link
+            key={cat.name}
+            href={`/products/${cat.name.toLowerCase().replace(/\s+/g, "-")}`}
             className="cursor-pointer text-center group"
           >
             <div className="h-28 md:h-32 rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition">
@@ -55,7 +63,9 @@ export default function Categories() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
               />
             </div>
-            <p className="mt-2 text-sm font-semibold text-gray-900">{cat.name}</p>
+            <p className="mt-2 text-sm font-semibold text-gray-900">
+              {cat.name}
+            </p>
           </Link>
         ))}
 

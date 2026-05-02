@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Heart, Eye, GitCompare } from "lucide-react";
 import { useCart } from "../store/cart";
 
 type Product = {
@@ -21,33 +21,50 @@ export default function ProductCard({
 
   const addToCart = useCart((state) => state.addToCart);
 
-  // CATEGORY PAGE DESIGN
   if (variant === "category") {
     return (
-      <div className="bg-white border rounded-xl overflow-hidden group hover:shadow-lg transition">
+      <div className="group cursor-pointer">
 
         {/* IMAGE */}
-        <div className="relative w-full h-64 bg-gray-50">
+        <div className="relative w-full h-64 overflow-hidden rounded-xl">
 
           <img
             src={image}
             className="w-full h-full object-cover"
           />
 
-          {/* SALE BADGE */}
-          <span className="absolute top-3 left-3 bg-pink-400 text-white text-xs px-2 py-1 rounded-full">
-            SALE
-          </span>
+          {/* RIGHT SIDE ICONS (DARK + BOLD + SLIDE) */}
+          <div className="absolute top-3 right-0 flex flex-col gap-3
+            translate-x-10 opacity-0 
+            group-hover:translate-x-0 group-hover:opacity-100
+            transition-all duration-300 ease-in-out">
 
-          {/* HOVER ADD TO CART */}
-          <div className="absolute bottom-0 left-0 right-0 bg-black/70 
-          text-white py-3 opacity-0 group-hover:opacity-100 transition">
+            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
+              <Heart size={18} />
+            </div>
+
+            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
+              <Eye size={18} />
+            </div>
+
+            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
+              <GitCompare size={18} />
+            </div>
+
+          </div>
+
+          {/* ADD TO CART (BIGGER + SMOOTH UP) */}
+          <div className="absolute bottom-0 left-0 w-full 
+            bg-black/80 text-white text-center py-3
+            translate-y-full opacity-0
+            group-hover:translate-y-0 group-hover:opacity-100
+            transition-all duration-300 ease-in-out">
 
             <button
               onClick={() => addToCart({ id, name, price, image })}
-              className="w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 w-full font-bold text-sm"
             >
-              <ShoppingCart size={16} />
+              <ShoppingCart size={18} />
               Add to Cart
             </button>
 
@@ -55,23 +72,28 @@ export default function ProductCard({
 
         </div>
 
-        {/* CONTENT */}
-        <div className="p-3">
+        {/* TEXT */}
+        <div className="mt-3">
 
-          <h3 className="text-sm font-medium text-gray-900">
+          <p className="text-sm font-bold text-gray-900">
             {name}
-          </h3>
+          </p>
 
-          <p className="text-gray-900 font-bold text-sm">
+          <div className="text-yellow-500 text-sm mt-1 font-bold">
+            ★★★★☆
+          </div>
+
+          <p className="text-base font-extrabold text-gray-900 mt-1">
             ₹{price}
           </p>
 
         </div>
+
       </div>
     );
   }
 
-  // DEFAULT DESIGN (UNCHANGED)
+  // DEFAULT (UNCHANGED)
   return (
     <div className="bg-white border rounded-xl overflow-hidden hover:shadow-md transition">
 
