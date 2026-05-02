@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link"; // ✅ ADD THIS
 import { ShoppingCart, Heart, Eye, GitCompare } from "lucide-react";
 import { useCart } from "../store/cart";
 
@@ -21,47 +22,53 @@ export default function ProductCard({
 
   const addToCart = useCart((state) => state.addToCart);
 
+  /* ================= CATEGORY (SMART SECTION) ================= */
   if (variant === "category") {
     return (
-      <div className="group cursor-pointer">
+
+      // ✅ WRAP WITH LINK
+      <Link href={`/product/${id}`} className="group cursor-pointer block">
 
         {/* IMAGE */}
-        <div className="relative w-full h-64 overflow-hidden rounded-xl">
+        <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-white">
 
           <img
             src={image}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
           />
 
-          {/* RIGHT SIDE ICONS (DARK + BOLD + SLIDE) */}
-          <div className="absolute top-3 right-0 flex flex-col gap-3
-            translate-x-10 opacity-0 
+          {/* RIGHT ICONS */}
+          <div className="absolute top-3 right-3 flex flex-col gap-3
+            transform translate-x-12 opacity-0
             group-hover:translate-x-0 group-hover:opacity-100
-            transition-all duration-300 ease-in-out">
+            transition-all duration-500 ease-in-out">
 
-            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
-              <Heart size={18} />
+            <div className="bg-black text-white p-2.5 rounded-full shadow-lg">
+              <Heart size={18} strokeWidth={2.5} />
             </div>
 
-            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
-              <Eye size={18} />
+            <div className="bg-black text-white p-2.5 rounded-full shadow-lg">
+              <Eye size={18} strokeWidth={2.5} />
             </div>
 
-            <div className="bg-black text-white p-2 rounded-full shadow cursor-pointer hover:scale-110 transition">
-              <GitCompare size={18} />
+            <div className="bg-black text-white p-2.5 rounded-full shadow-lg">
+              <GitCompare size={18} strokeWidth={2.5} />
             </div>
 
           </div>
 
-          {/* ADD TO CART (BIGGER + SMOOTH UP) */}
-          <div className="absolute bottom-0 left-0 w-full 
-            bg-black/80 text-white text-center py-3
-            translate-y-full opacity-0
-            group-hover:translate-y-0 group-hover:opacity-100
-            transition-all duration-300 ease-in-out">
+          {/* ADD TO CART */}
+          <div className="absolute left-0 bottom-0 w-full
+            transform translate-y-full
+            group-hover:translate-y-0
+            bg-black text-white text-center py-3
+            transition-all duration-500 ease-in-out">
 
             <button
-              onClick={() => addToCart({ id, name, price, image })}
+              onClick={(e) => {
+                e.preventDefault(); // 🔥 VERY IMPORTANT
+                addToCart({ id, name, price, image });
+              }}
               className="flex items-center justify-center gap-2 w-full font-bold text-sm"
             >
               <ShoppingCart size={18} />
@@ -89,11 +96,11 @@ export default function ProductCard({
 
         </div>
 
-      </div>
+      </Link>
     );
   }
 
-  // DEFAULT (UNCHANGED)
+  /* ================= DEFAULT (UNCHANGED) ================= */
   return (
     <div className="bg-white border rounded-xl overflow-hidden hover:shadow-md transition">
 

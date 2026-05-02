@@ -8,9 +8,16 @@ type CartItem = {
   qty: number;
 };
 
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+};
+
 type CartStore = {
   cart: CartItem[];
-  addToCart: (item: any) => void;
+  addToCart: (item: Product) => void; // ✅ FIXED
   removeFromCart: (id: number) => void;
   updateQty: (id: number, qty: number) => void;
 };
@@ -18,6 +25,7 @@ type CartStore = {
 export const useCart = create<CartStore>((set) => ({
   cart: [],
 
+  // ✅ ADD TO CART
   addToCart: (item) =>
     set((state) => {
       const exists = state.cart.find((i) => i.id === item.id);
@@ -37,11 +45,13 @@ export const useCart = create<CartStore>((set) => ({
       };
     }),
 
+  // ✅ REMOVE
   removeFromCart: (id) =>
     set((state) => ({
       cart: state.cart.filter((i) => i.id !== id),
     })),
 
+  // ✅ UPDATE QTY
   updateQty: (id, qty) =>
     set((state) => ({
       cart: state.cart.map((i) =>

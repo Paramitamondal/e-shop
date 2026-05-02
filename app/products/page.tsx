@@ -1,28 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ProductCard from "../components/ProductCard";
-
-const allProducts = [
-  { id: 1, name: "iPhone 15 Pro", price: 129999, image: "/iphone15.png", category:"mobile" },
-  { id: 2, name: "Samsung S24", price: 119999, image: "/samsungs24.png", category:"mobile" },
-  { id: 3, name: "OnePlus 12", price: 64999, image: "/oneplus12.png", category:"mobile" },
-  { id: 4, name: "Xiaomi 14", price: 54999, image: "/xaomi.png", category:"mobile" },
-
-  { id: 5, name: "Kids Dress", price: 699, image: "/kids1.png", category:"kids" },
-  { id: 6, name: "Girls Coat", price: 899, image: "/kids2.png", category:"kids" },
-  { id: 7, name: "Winter Jacket", price: 1299, image: "/kids3.png", category:"kids" },
-  { id: 8, name: "Party Wear", price: 999, image: "/kids4.png", category:"kids" },
-];
+import { products } from "../../data/products";
 
 export default function ProductsPage() {
 
-  const [category,setCategory] = useState("all")
+  const [category, setCategory] = useState("all");
 
-  const filtered =
-    category === "all"
-      ? allProducts
-      : allProducts.filter(p=>p.category===category)
+  const filtered = useMemo(() => {
+    return category === "all"
+      ? products
+      : products.filter((p) => p.category === category);
+  }, [category]);
 
   return (
     <div className="bg-white min-h-screen">
@@ -41,8 +31,9 @@ export default function ProductsPage() {
             <label className="flex gap-2 cursor-pointer">
               <input
                 type="radio"
-                checked={category==="all"}
-                onChange={()=>setCategory("all")}
+                name="category"
+                checked={category === "all"}
+                onChange={() => setCategory("all")}
               />
               All Products
             </label>
@@ -50,8 +41,9 @@ export default function ProductsPage() {
             <label className="flex gap-2 cursor-pointer">
               <input
                 type="radio"
-                checked={category==="mobile"}
-                onChange={()=>setCategory("mobile")}
+                name="category"
+                checked={category === "mobile"}
+                onChange={() => setCategory("mobile")}
               />
               Mobile
             </label>
@@ -59,8 +51,9 @@ export default function ProductsPage() {
             <label className="flex gap-2 cursor-pointer">
               <input
                 type="radio"
-                checked={category==="kids"}
-                onChange={()=>setCategory("kids")}
+                name="category"
+                checked={category === "kids"}
+                onChange={() => setCategory("kids")}
               />
               Kids
             </label>
@@ -87,9 +80,13 @@ export default function ProductsPage() {
           {/* GRID */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-            {filtered.map(p=>(
-              <ProductCard key={p.id} {...p}/>
-            ))}
+            {filtered.length === 0 ? (
+              <p className="text-gray-500">No products found</p>
+            ) : (
+              filtered.map((p) => (
+                <ProductCard key={p.id} {...p} variant="category" />
+              ))
+            )}
 
           </div>
 
