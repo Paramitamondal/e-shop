@@ -10,9 +10,7 @@ import ProductsSection from "./components/ProductsSection";
 export default function Home() {
   return (
     <div className="bg-gray-50 min-h-screen">
-      
       <div className="max-w-7xl mx-auto">
-
         <Categories />
         <Hero />
 
@@ -24,7 +22,7 @@ export default function Home() {
         <PromoBanner
           image="/promobanner.png"
           title="BIG PROMO"
-          subtitle="Summer Sale – Up to 70% Off Fashion Collection"
+          subtitle="Summer Sale - Up to 70% Off Fashion Collection"
           link="/categories/fashion"
         />
 
@@ -47,57 +45,52 @@ export default function Home() {
           <ProductsSection title="Top Rated" />
         </div>
 
-      </div>
-
-      {/* ================= MOBILE APP SECTION ================= */}
-      <div className="bg-[#F5F6F8] py-10 px-5 mt-12">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-
-          {/* IMAGE */}
-          <div className="flex justify-center">
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/073/756/218/non_2x/e-commerce-mobile-app-interface-using-a-lady-flat-illustration-of-woman-in-blue-t-shirt-shopping-using-a-mobile-app-vector.jpg"
-              alt="eShop Mobile App"
-              className="w-[260px] md:w-[320px]"
-            />
-          </div>
-
-          {/* TEXT */}
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-              eShop Mobile App
-            </h2>
-
-            <p className="text-lg font-semibold text-gray-600 mt-2">
-              Affordable Ecommerce Platform
-            </p>
-
-            <p className="text-gray-500 mt-3 leading-relaxed">
-              Shop with us at affordable prices and get exciting cashback & offers.
-            </p>
-
-            <div className="flex gap-4 mt-6">
-              <a
-                href="https://apple.com/app-store"
-                target="_blank"
-                className="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-full shadow"
-              >
-                App Store
-              </a>
-
-              <a
-                href="https://play.google.com"
-                target="_blank"
-                className="flex items-center gap-2 bg-[#22C55E] text-white px-5 py-3 rounded-full shadow"
-              >
-                ▶ Google Play
-              </a>
+        {/* MOBILE APP SECTION */}
+        <div className="bg-[#F5F6F8] py-10 px-5 mt-12">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            
+            {/* IMAGE */}
+            <div className="flex justify-center">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/073/756/218/non_2x/eshop-mobile-app-ui-ux-design-template-free-vector.jpg"
+                alt="eShop Mobile App"
+                className="w-[260px] md:w-[320px] rounded-xl shadow-lg"
+              />
             </div>
-          </div>
 
+            {/* TEXT */}
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+                eShop Mobile App
+              </h2>
+              <p className="text-lg font-semibold text-gray-600 mt-2">
+                Affordable Ecommerce Platform
+              </p>
+              <p className="text-gray-500 mt-3 leading-relaxed">
+                Shop with us at affordable prices and get exciting cashback & offers!
+              </p>
+
+              <div className="flex gap-4 mt-6">
+                <a
+                  href="https://apple.com/app-store"
+                  target="_blank"
+                  className="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-full hover:bg-gray-800 transition-all"
+                >
+                  App Store
+                </a>
+                <a
+                  href="https://play.google.com"
+                  target="_blank"
+                  className="flex items-center gap-2 bg-[#22C55E] text-white px-5 py-3 rounded-full hover:bg-green-600 transition-all"
+                >
+                  Google Play
+                </a>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-
     </div>
   );
 }
